@@ -99,4 +99,21 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function logoutUser() {
+        try {
+            $user = Auth::user();
+            $user->tokens()->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'You have been successfully logged out',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }
